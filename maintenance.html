@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Library Maintenance</title>
+  <link rel="stylesheet" href="style/maintenance.css">
+</head>
+<body>
+  <header>
+    <h1>🛠️ Library Maintenance</h1>
+    <p>Manage your library's book catalog, authors, and access the dashboard.</p>
+  </header>
+
+  <nav class="nav">
+    <a href="dashboard.html">🏠 Dashboard</a>
+    <a href="reports.html">📊 Reports</a>
+    <a href="transactions.html">🔁 Transactions</a>
+    <a href="membership.html">👥 Membership</a>
+  </nav>
+
+  <main>
+    <!-- Dashboard Overview -->
+    <section class="dashboard">
+      <h2>📊 Dashboard Overview</h2>
+      <p>Track the current status of your library:</p>
+      <div class="dashboard-card">
+        <h3>Total Books</h3>
+        <p id="bookCount">Loading...</p>
+      </div>
+      <div class="dashboard-card">
+        <h3>Total Authors</h3>
+        <p id="authorCount">Loading...</p>
+      </div>
+    </section>
+
+    <section class="form-section">
+      <h2>📘 Add a New Book</h2>
+      <p>Fill in the details below to expand your catalog.</p>
+      <form id="addBook" class="form-card">
+        <label>Title:<input type="text" id="bookTitle" required></label>
+        <label>Author:<input type="text" id="bookAuthor" required></label>
+        <label>Genre:<input type="text" id="bookGenre" required></label>
+        <label>Year:<input type="number" id="bookYear" required></label>
+        <button type="submit">➕ Add Book</button>
+      </form>
+    </section>
+
+    <section class="form-section">
+      <h2>✍️ Add a New Author</h2>
+      <p>Provide information to keep your author database up-to-date.</p>
+      <form id="addAuthor" class="form-card">
+        <label>Name:<input type="text" id="authorName" required></label>
+        <label>Bio:<textarea id="authorBio" required></textarea></label>
+        <button type="submit">➕ Add Author</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>📚 Connected to Library System • All data saved locally</p>
+  </footer>
+
+  <script src="common.js"></script>
+  <script>
+    checkSession('admin');
+
+    const getBooks = () => JSON.parse(localStorage.getItem('books')) || [];
+    const getAuthors = () => JSON.parse(localStorage.getItem('authors')) || [];
+
+    // Update Dashboard Counts
+    const updateDashboard = () => {
+      const books = getBooks();
+      const authors = getAuthors();
+      document.getElementById('bookCount').textContent = books.length;
+      document.getElementById('authorCount').textContent = authors.length;
+    };
+
+    updateDashboard();
+
+    // Add Book
+    document.getElementById('addBook').onsubmit = (e) => {
+      e.preventDefault();
+      const title = bookTitle.value.trim();
+      const author = bookAuthor.value.trim();
+      const genre = bookGenre.value.trim();
+      const year = bookYear.value.trim();
+
+      const books = getBooks();
+      books.push({ title, author, genre, year });
+      localStorage.setItem('books', JSON.stringify(books));
+      alert('✅ Book added!');
+      updateDashboard();
+      e.target.reset();
+    };
+
+    // Add Author
+    document.getElementById('addAuthor').onsubmit = (e) => {
+      e.preventDefault();
+      const name = authorName.value.trim();
+      const bio = authorBio.value.trim();
+
+      const authors = getAuthors();
+      authors.push({ name, bio });
+      localStorage.setItem('authors', JSON.stringify(authors));
+      alert('✅ Author added!');
+      updateDashboard();
+      e.target.reset();
+    };
+  </script>
+</body>
+</html>

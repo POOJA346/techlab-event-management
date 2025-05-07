@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Library Login</title>
+  <link rel="stylesheet" href="style/styles.css">
+</head>
+<body>
+  <h2>Login</h2>
+  <form id="loginForm">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required /><br/>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required /><br/>
+
+    <button type="submit">Login</button>
+  </form>
+
+  <script>
+    // Initialize dummy users if not already present
+    if (!localStorage.getItem('users')) {
+      localStorage.setItem('users', JSON.stringify([
+        { username: 'admin', password: 'admin123', role: 'admin' },
+        { username: 'user1', password: 'user123', role: 'user' }
+      ]));
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const uname = document.getElementById('username').value.trim();
+      const pwd = document.getElementById('password').value.trim();
+      const users = JSON.parse(localStorage.getItem('users')) || [];
+
+      const foundUser = users.find(user => user.username === uname && user.password === pwd);
+
+      if (foundUser) {
+        // Save session info to localStorage
+        localStorage.setItem('session', JSON.stringify({ username: uname, role: foundUser.role }));
+        window.location.href = 'dashboard.html'; // Redirect to dashboard
+      } else {
+        alert('Invalid credentials');
+      }
+    });
+  </script>
+</body>
+</html>

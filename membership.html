@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Membership Management</title>
+  <link rel="stylesheet" href="style/membership.css">
+</head>
+<body>
+  <header>
+    <h1>👥 Membership Management</h1>
+    <p>Manage memberships for library users, extend or cancel memberships, and create new ones!</p>
+  </header>
+
+  <nav class="nav">
+    <a href="dashboard.html">🏠 Dashboard</a>
+    <a href="maintenance.html">🛠️ Maintenance</a>
+    <a href="transactions.html">🔄 Transactions</a>
+    <a href="reports.html">📊 Reports</a>
+  </nav>
+
+  <main>
+    <!-- Dashboard Overview -->
+    <section class="dashboard">
+      <h2>📊 Dashboard Overview</h2>
+      <p>View membership statistics and manage memberships efficiently:</p>
+      <div class="dashboard-card">
+        <h3>Total Active Members</h3>
+        <p id="activeMemberCount">Loading...</p>
+      </div>
+    </section>
+
+    <!-- Add Membership Form -->
+    <section class="form-section">
+      <h2>📇 Add New Membership</h2>
+      <p>Enter member details and choose the duration of the membership.</p>
+      <form id="addMembership">
+        <label>Name: <input type="text" id="mname" required></label><br/>
+        <label>Duration:
+          <label><input type="radio" name="duration" value="6 months" checked>6 Months</label>
+          <label><input type="radio" name="duration" value="1 year">1 Year</label>
+          <label><input type="radio" name="duration" value="2 years">2 Years</label>
+        </label><br/>
+        <button type="submit">Add Membership</button>
+      </form>
+    </section>
+
+    <!-- Update Membership Form -->
+    <section class="form-section">
+      <h2>🔄 Update Membership</h2>
+      <p>Update existing memberships by either extending or cancelling them.</p>
+      <form id="updateMembership">
+        <label>Membership ID: <input type="text" id="memberId" required></label><br/>
+        <label><input type="radio" name="action" value="extend" checked> Extend 6 Months</label>
+        <label><input type="radio" name="action" value="cancel"> Cancel</label><br/>
+        <button type="submit">Update Membership</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Library System | All rights reserved</p>
+  </footer>
+
+  <script src="common.js"></script>
+  <script>
+    checkSession();
+
+    const getMemberships = () => JSON.parse(localStorage.getItem('memberships')) || [];
+
+    // Add new membership
+    document.getElementById('addMembership').onsubmit = e => {
+      e.preventDefault();
+      const name = mname.value.trim();
+      const duration = document.querySelector('input[name="duration"]:checked').value;
+      const id = 'M' + Date.now();
+      const newMem = { memberId: id, name, duration, status: 'active' };
+
+      const memberships = getMemberships();
+      memberships.push(newMem);
+      localStorage.setItem('memberships', JSON.stringify(memberships));
+      alert('Membership Added');
+      e.target.reset();
+    };
+
+    // Update membership status
+    document.getElementById('updateMembership').onsubmit = e => {
+      e.preventDefault();
+      const id = memberId.value.trim();
+      const action = document.querySelector('input[name="action"]:checked').value;
+      let memberships = getMemberships();
+      const index = memberships.findIndex(m => m.memberId === id);
+      if (index === -1) return alert('Member not found');
+
+      if (action === 'extend') {
+        memberships[index].duration += ' +6m';
+      } else {
+        memberships[index].status = 'cancelled';
+      }
+
+      localStorage.setItem('memberships', JSON.stringify(memberships));
+      alert('Membership Updated');
+    };
+
+    // Update active member count in dashboard
+    const updateDashboard = () => {
+      const memberships = getMemberships();
+      const activeCount = memberships.filter(m => m.status === 'active').length;
+      document.getElementById('activeMemberCount').innerText = activeCount;
+    };
+    updateDashboard();
+  </script>
+</body>
+</html>

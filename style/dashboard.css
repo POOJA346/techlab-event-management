@@ -1,0 +1,103 @@
+/* Reset and Base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #f4f6fa;
+    color: #333;
+    text-align: center;
+    padding: 30px;
+  }
+  
+  /* Header */
+  header h1 {
+    font-size: 2.8em;
+    color: #2c3e50;
+    margin-bottom: 10px;
+  }
+  
+  #welcomeText {
+    font-size: 1.1em;
+    color: #555;
+    margin-bottom: 30px;
+  }
+  
+  /* Navigation */
+  .nav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    background: #fff;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    margin-bottom: 40px;
+  }
+  
+  .nav a {
+    text-decoration: none;
+    color: #0077cc;
+    font-weight: 600;
+    font-size: 1em;
+    transition: color 0.3s ease;
+  }
+  
+  .nav a:hover {
+    color: #004f88;
+  }
+  
+  /* Cards Section */
+  .info-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 20px;
+  }
+  
+  .card {
+    background: white;
+    border-radius: 14px;
+    padding: 25px 20px;
+    width: 220px;
+    text-decoration: none;
+    color: inherit;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 18px rgba(0, 0, 0, 0.15);
+  }
+  
+  .card .icon {
+    font-size: 2.8em;
+    margin-bottom: 12px;
+  }
+  
+  .card h3 {
+    margin-bottom: 8px;
+    color: #2c3e50;
+  }
+  
+  .card p {
+    font-size: 0.95em;
+    color: #666;
+  }
+  
+  /* Footer */
+  footer {
+    margin-top: 50px;
+    font-size: 0.9em;
+    color: #aaa;
+  }
+  

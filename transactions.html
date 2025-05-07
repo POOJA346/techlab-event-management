@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Transactions: Issue or Return Books</title>
+  <link rel="stylesheet" href="style/transactions.css">
+</head>
+<body>
+  <header>
+    <h1>🔄 Library Transactions</h1>
+    <p>Manage the issuance and return of books in the library system.</p>
+  </header>
+
+  <nav class="nav">
+    <a href="dashboard.html">🏠 Dashboard</a>
+    <a href="maintenance.html">🛠️ Maintenance</a>
+    <a href="reports.html">📊 Reports</a>
+    <a href="membership.html">👥 Membership</a>
+  </nav>
+
+  <main>
+    <!-- Dashboard Overview -->
+    <section class="dashboard">
+      <h2>📊 Dashboard Overview</h2>
+      <p>Monitor the activity of issued and returned books:</p>
+      <div class="dashboard-card">
+        <h3>Total Transactions</h3>
+        <p id="transactionCount">Loading...</p>
+      </div>
+    </section>
+
+    <!-- Issue Book Form -->
+    <section class="form-section">
+      <h2>📚 Issue a Book</h2>
+      <p>Issue a book to a member by entering the Member ID and Book Title.</p>
+      <form id="issueBook">
+        Member ID: <input type="text" id="issueMemberId" required><br/>
+        Book Title: <input type="text" id="issueBookTitle" required><br/>
+        <button type="submit">Issue Book</button>
+      </form>
+    </section>
+
+    <!-- Return Book Form -->
+    <section class="form-section">
+      <h2>📚 Return a Book</h2>
+      <p>Record the return of a book by entering the Member ID and Book Title.</p>
+      <form id="returnBook">
+        Member ID: <input type="text" id="returnMemberId" required><br/>
+        Book Title: <input type="text" id="returnBookTitle" required><br/>
+        <button type="submit">Return Book</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Library System | All rights reserved</p>
+  </footer>
+
+  <script src="common.js"></script>
+  <script>
+    checkSession();
+
+    const getTransactions = () => JSON.parse(localStorage.getItem('transactions')) || [];
+
+    // Issue Book
+    document.getElementById('issueBook').onsubmit = (e) => {
+      e.preventDefault();
+      const memberId = issueMemberId.value.trim();
+      const bookTitle = issueBookTitle.value.trim();
+
+      const transactions = getTransactions();
+      const transaction = { member: memberId, book: bookTitle, action: 'Issued', date: new Date().toLocaleString() };
+      transactions.push(transaction);
+      localStorage.setItem('transactions', JSON.stringify(transactions));
+
+      alert('Book issued!');
+      e.target.reset();
+    };
+
+    // Return Book
+    document.getElementById('returnBook').onsubmit = (e) => {
+      e.preventDefault();
+      const memberId = returnMemberId.value.trim();
+      const bookTitle = returnBookTitle.value.trim();
+
+      const transactions = getTransactions();
+      const transaction = { member: memberId, book: bookTitle, action: 'Returned', date: new Date().toLocaleString() };
+      transactions.push(transaction);
+      localStorage.setItem('transactions', JSON.stringify(transactions));
+
+      alert('Book returned!');
+      e.target.reset();
+    };
+  </script>
+</body>
+</html>

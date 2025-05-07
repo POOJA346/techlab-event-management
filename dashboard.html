@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="style/dashboard.css">
+</head>
+<body>
+  <header>
+    <h1>📚 Library Management Dashboard</h1>
+    <p id="welcomeText"></p>
+  </header>
+
+  <nav class="nav" id="nav"></nav>
+
+  <section class="info-section">
+    <a href="maintenance.html" class="card" id="maintenanceCard">
+      <div class="icon">🛠️</div>
+      <h3>Maintenance</h3>
+      <p>Manage books, authors, and categories.</p>
+    </a>
+    <a href="transactions.html" class="card">
+      <div class="icon">🔁</div>
+      <h3>Transactions</h3>
+      <p>Issue and return books seamlessly.</p>
+    </a>
+    <a href="membership.html" class="card">
+      <div class="icon">👥</div>
+      <h3>Membership</h3>
+      <p>Manage user roles and registration.</p>
+    </a>
+    <a href="reports.html" class="card">
+      <div class="icon">📊</div>
+      <h3>Reports</h3>
+      <p>Generate reports on usage and fines.</p>
+    </a>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Library System | All rights reserved</p>
+  </footer>
+
+  <script src="common.js"></script>
+  <script>
+    checkSession();
+
+    const session = JSON.parse(localStorage.getItem('session'));
+    const role = session.role;
+    const uname = session.username;
+
+    document.getElementById('welcomeText').innerText = `Welcome, ${uname} (${role})`;
+
+    let navLinks = `
+      <a href="reports.html">📊 Reports</a>
+      <a href="transactions.html">🔁 Transactions</a>
+      <a href="membership.html">👥 Membership</a>
+    `;
+    if (role === 'admin') {
+      navLinks = `<a href="maintenance.html">🛠️ Maintenance</a>` + navLinks;
+      document.getElementById('maintenanceCard').style.display = "flex";
+    } else {
+      document.getElementById('maintenanceCard').style.display = "none";
+    }
+
+    document.getElementById('nav').innerHTML = navLinks;
+  </script>
+</body>
+</html>

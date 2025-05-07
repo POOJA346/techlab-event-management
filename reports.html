@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Reports - View Logs and Transaction History</title>
+  <link rel="stylesheet" href="style/reports.css">
+</head>
+<body>
+  <header>
+    <h1>📊 Library Reports</h1>
+    <p>View logs and transaction history to track the activity of your library members.</p>
+  </header>
+
+  <nav class="nav">
+    <a href="dashboard.html">🏠 Dashboard</a>
+    <a href="maintenance.html">🛠️ Maintenance</a>
+    <a href="transactions.html">🔁 Transactions</a>
+    <a href="membership.html">👥 Membership</a>
+  </nav>
+
+  <main>
+    <!-- Dashboard Overview -->
+    <section class="dashboard">
+      <h2>📊 Dashboard Overview</h2>
+      <p>Track the current status of your library's activities:</p>
+      <div class="dashboard-card">
+        <h3>Total Transactions</h3>
+        <p id="transactionCount">Loading...</p>
+      </div>
+      <div class="dashboard-card">
+        <h3>Total Memberships</h3>
+        <p id="membershipCount">Loading...</p>
+      </div>
+    </section>
+
+    <section class="table-section">
+      <h2>📚 Books Transaction History</h2>
+      <p>View the history of books issued, returned, and the associated transactions.</p>
+      <table id="transactionTable">
+        <thead>
+          <tr><th>Member</th><th>Book</th><th>Action</th><th>Date</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <section class="table-section">
+      <h2>👥 Memberships</h2>
+      <p>See details of active memberships, including their status and duration.</p>
+      <table id="membershipTable">
+        <thead>
+          <tr><th>Member</th><th>Duration</th><th>Status</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Library System | All rights reserved</p>
+  </footer>
+
+  <script src="common.js"></script>
+  <script>
+    checkSession();
+
+    const getTransactions = () => JSON.parse(localStorage.getItem('transactions')) || [];
+    const getMemberships = () => JSON.parse(localStorage.getItem('memberships')) || [];
+
+    // Display transactions in table
+    const displayTransactions = () => {
+      const transactions = getTransactions();
+      const tbody = document.getElementById('transactionTable').getElementsByTagName('tbody')[0];
+      transactions.forEach(transaction => {
+        const row = tbody.insertRow();
+        row.innerHTML = `<td>${transaction.member}</td><td>${transaction.book}</td><td>${transaction.action}</td><td>${transaction.date}</td>`;
+      });
+      document.getElementById('transactionCount').textContent = transactions.length;
+    };
+
+    // Display memberships in table
+    const displayMemberships = () => {
+      const memberships = getMemberships();
+      const tbody = document.getElementById('membershipTable').getElementsByTagName('tbody')[0];
+      memberships.forEach(membership => {
+        const row = tbody.insertRow();
+        row.innerHTML = `<td>${membership.name}</td><td>${membership.duration}</td><td>${membership.status}</td>`;
+      });
+      document.getElementById('membershipCount').textContent = memberships.length;
+    };
+
+    displayTransactions();
+    displayMemberships();
+  </script>
+</body>
+</html>
