@@ -4,9 +4,89 @@
   <meta charset="UTF-8">
   <title>Library Login</title>
   <link rel="stylesheet" href="style/styles.css">
+  <style>
+    /* Add styles for the page */
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f4f7fa;
+      padding: 20px;
+    }
+
+    h2 {
+      color: #333;
+    }
+
+    #loginForm {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      display: inline-block;
+      margin-top: 30px;
+    }
+
+    label {
+      font-size: 1.2em;
+      color: #555;
+    }
+
+    input {
+      padding: 10px;
+      width: 100%;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1em;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      font-size: 1em;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    /* Styling for the disclaimer */
+    #disclaimer {
+      font-size: 0.9em;
+      color: #888;
+      margin-top: 15px;
+      background-color: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      border: 1px dashed #ccc;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+      display: inline-block;
+      width: 80%;
+      max-width: 400px;
+      margin-top: 20px;
+      text-align: left;
+      font-style: italic;
+    }
+
+    #disclaimer p {
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    #disclaimer .highlight {
+      font-weight: bold;
+      color: #333;
+    }
+  </style>
 </head>
 <body>
-  <h2>Login</h2>
+  <h2>Library Login</h2>
   <form id="loginForm">
     <label for="username">Username:</label>
     <input type="text" id="username" name="username" required /><br/>
@@ -16,6 +96,11 @@
 
     <button type="submit">Login</button>
   </form>
+
+  <!-- Disclaimer Section -->
+  <div id="disclaimer">
+    <p><span class="highlight">Note:</span> Your username and password are securely stored on this page. Please keep them safe. <span class="highlight">Admin:</span> "admin" / "admin123", <span class="highlight">User:</span> "user1" / "user123". This is for demonstration purposes only.</p>
+  </div>
 
   <script>
     // Initialize dummy users if not already present
